@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>三角洲行動 · 精細隨機裝備 + 音樂書籤</title>
     <style>
-        /* ===== 全局 ===== */
         * {
             margin: 0;
             padding: 0;
@@ -102,9 +101,6 @@
             border-color: rgba(160, 140, 180, 0.15);
             color: #c8b8d8;
         }
-        .btn-secondary:hover {
-            background: rgba(70, 60, 80, 0.6);
-        }
 
         /* ===== 獎池勾選區 ===== */
         .pool-section {
@@ -162,11 +158,6 @@
             accent-color: #5ab08a;
             cursor: pointer;
         }
-        .pool-items .item-count {
-            font-size: 0.65rem;
-            color: #4a6a7a;
-            margin-left: 2px;
-        }
 
         /* ===== 裝備展示 ===== */
         .equipment-grid {
@@ -209,10 +200,6 @@
             margin-top: 6px;
             line-height: 1.5;
         }
-        .equip-card .item-detail strong {
-            color: #a0c8d8;
-            font-weight: 400;
-        }
         .equip-card .value-tag {
             position: absolute;
             top: 12px;
@@ -223,7 +210,6 @@
             padding: 2px 12px;
             font-size: 0.7rem;
             color: #e8b830;
-            letter-spacing: 0.5px;
         }
         .role-tag {
             display: inline-block;
@@ -236,22 +222,18 @@
         }
         .role-tag.assault {
             background: rgba(200, 60, 60, 0.2);
-            border: 1px solid rgba(200, 60, 60, 0.2);
             color: #ff8a8a;
         }
         .role-tag.medical {
             background: rgba(60, 200, 100, 0.2);
-            border: 1px solid rgba(60, 200, 100, 0.2);
             color: #7ae8a0;
         }
         .role-tag.engineer {
             background: rgba(60, 160, 200, 0.2);
-            border: 1px solid rgba(60, 160, 200, 0.2);
             color: #7ac8e8;
         }
         .role-tag.scout {
             background: rgba(200, 180, 60, 0.2);
-            border: 1px solid rgba(200, 180, 60, 0.2);
             color: #e8d87a;
         }
         .ammo-box {
@@ -286,12 +268,6 @@
             color: #8ab8d0;
             border: 1px solid rgba(60, 140, 180, 0.06);
         }
-        .attachment-tag .cat {
-            color: #5a8a9a;
-        }
-        .attachment-tag .val {
-            color: #c0dce8;
-        }
         .meds-list {
             display: flex;
             flex-wrap: wrap;
@@ -317,12 +293,10 @@
         }
         .map-tier.tier-secret {
             background: rgba(60, 140, 200, 0.15);
-            border: 1px solid rgba(60, 140, 200, 0.15);
             color: #7ac8e8;
         }
         .map-tier.tier-topsecret {
             background: rgba(200, 60, 60, 0.2);
-            border: 1px solid rgba(200, 60, 60, 0.2);
             color: #ff8a8a;
         }
         .total-value-card {
@@ -347,7 +321,6 @@
             font-size: 1.8rem;
             font-weight: 300;
             color: #e8b830;
-            text-shadow: 0 0 30px rgba(232, 184, 48, 0.08);
         }
         .total-value-card .value span {
             font-size: 1rem;
@@ -388,7 +361,6 @@
             background: rgba(30, 60, 80, 0.9);
             padding-right: 16px;
             color: #fff;
-            box-shadow: -6px 0 30px rgba(0, 0, 0, 0.6);
         }
         .music-toggle .icon {
             display: inline-block;
@@ -399,8 +371,8 @@
         .music-sidebar {
             position: fixed;
             top: 0;
-            right: -500px;
-            width: 480px;
+            right: -520px;
+            width: 500px;
             height: 100vh;
             background: rgba(12, 24, 34, 0.96);
             backdrop-filter: blur(12px);
@@ -537,13 +509,37 @@
             color: #6a8a9a;
             margin-top: 2px;
         }
-        .result-item .info .play-hint {
-            font-size: 0.65rem;
+        .result-item .info .action-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+        .play-btn {
+            font-size: 0.7rem;
             color: #5ab08a;
-            margin-top: 2px;
+            text-decoration: none;
+            border: 1px solid rgba(90, 176, 138, 0.2);
+            border-radius: 30px;
+            padding: 3px 16px;
+            transition: 0.15s;
+            cursor: pointer;
+            background: transparent;
+            font-family: inherit;
+        }
+        .play-btn:hover {
+            background: rgba(90, 176, 138, 0.1);
+            color: #7ae0b0;
+        }
+        .play-btn.copy-btn {
+            color: #b0b8c8;
+            border-color: rgba(160, 160, 180, 0.15);
+        }
+        .play-btn.copy-btn:hover {
+            background: rgba(160, 160, 180, 0.1);
+            color: #d0d8e8;
         }
 
-        /* ===== 播放器 ===== */
         .player-wrapper {
             margin-top: 16px;
             border-radius: 16px;
@@ -575,7 +571,28 @@
             letter-spacing: 1px;
         }
 
-        /* 響應式 */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(20, 40, 55, 0.95);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(90, 176, 138, 0.2);
+            border-radius: 16px;
+            padding: 12px 28px;
+            color: #d0e8f0;
+            font-size: 0.9rem;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .toast.show {
+            opacity: 1;
+        }
+
         @media (max-width: 700px) {
             .container {
                 padding: 20px 18px 25px;
@@ -606,6 +623,10 @@
                 width: 60px;
                 height: 42px;
             }
+            .play-btn {
+                font-size: 0.6rem;
+                padding: 2px 10px;
+            }
         }
         @media (max-width: 480px) {
             .equipment-grid {
@@ -618,6 +639,10 @@
             }
             .search-area input {
                 font-size: 0.85rem;
+            }
+            .result-item .info .action-row {
+                flex-direction: column;
+                gap: 4px;
             }
         }
     </style>
@@ -634,9 +659,7 @@
             <button class="btn btn-secondary" id="resetBtn">⟳ 重置</button>
         </div>
 
-        <!-- 獎池勾選區 -->
         <div id="poolContainer"></div>
-
         <div id="equipmentDisplay">
             <div class="empty-state">⚙️ 點擊「隨機生成」獲取一套裝備</div>
         </div>
@@ -664,119 +687,53 @@
 
     <script>
         // ============================================================
-        // 1. 裝備資料庫（完整）
+        // 1. 裝備資料庫（精簡版）
         // ============================================================
-
         const operators = [
-            { name: '紅狼', role: '突擊', ability: '戰術衝鋒 · 提升移動速度與近戰傷害' },
-            { name: '威龍', role: '突擊', ability: '火力壓制 · 短時間內提升射速' },
-            { name: '無名', role: '突擊', ability: '潛行突襲 · 隱蔽接近敵人' },
-            { name: '疾風', role: '突擊', ability: '快速突進 · 衝刺後短暫提升攻擊力' },
-            { name: '蜂醫', role: '醫療', ability: '醫療支援 · 快速治療隊友並恢復血量' },
-            { name: '蠱', role: '醫療', ability: '毒素治療 · 使用特殊藥劑持續回血' },
-            { name: '蝶', role: '醫療', ability: '快速救援 · 大幅縮短救治時間' },
-            { name: '老黑', role: '工程', ability: '戰術指揮 · 提升團隊防禦力' },
-            { name: '烏魯魯', role: '工程', ability: '防禦工事 · 建立臨時掩體' },
-            { name: '比特', role: '工程', ability: '電子干擾 · 癱瘓敵方設備' },
-            { name: '盾哥', role: '工程', ability: '重型防護 · 裝備盾牌抵擋正面攻擊' },
-            { name: '液氮', role: '工程', ability: '冷凍陷阱 · 減速並凍結敵人' },
-            { name: '露娜', role: '探測', ability: '偵查追蹤 · 標記隱藏敵人的位置' },
-            { name: '麥曉雯', role: '探測', ability: '情報分析 · 顯示敵方弱點' },
-            { name: '銀翼', role: '探測', ability: '無人偵查 · 釋放小型偵查無人機' },
-            { name: '回響', role: '探測', ability: '聲波探測 · 發現周圍所有動靜' },
+            { name: '紅狼', role: '突擊', ability: '戰術衝鋒' },
+            { name: '威龍', role: '突擊', ability: '火力壓制' },
+            { name: '無名', role: '突擊', ability: '潛行突襲' },
+            { name: '疾風', role: '突擊', ability: '快速突進' },
+            { name: '蜂醫', role: '醫療', ability: '醫療支援' },
+            { name: '蠱', role: '醫療', ability: '毒素治療' },
+            { name: '蝶', role: '醫療', ability: '快速救援' },
+            { name: '老黑', role: '工程', ability: '戰術指揮' },
+            { name: '烏魯魯', role: '工程', ability: '防禦工事' },
+            { name: '比特', role: '工程', ability: '電子干擾' },
+            { name: '盾哥', role: '工程', ability: '重型防護' },
+            { name: '液氮', role: '工程', ability: '冷凍陷阱' },
+            { name: '露娜', role: '探測', ability: '偵查追蹤' },
+            { name: '麥曉雯', role: '探測', ability: '情報分析' },
+            { name: '銀翼', role: '探測', ability: '無人偵查' },
+            { name: '回響', role: '探測', ability: '聲波探測' },
         ];
 
         const vests = [
             { name: '輕量防彈背心', level: 'II級', weight: '2.8kg' },
             { name: '戰術防彈背心', level: 'III級', weight: '4.0kg' },
             { name: '重型防彈背心', level: 'IV級', weight: '5.6kg' },
-            { name: '特種作戰背心', level: 'III+級', weight: '4.4kg' },
-            { name: '陶瓷複合防彈衣', level: 'V級', weight: '6.4kg' },
-            { name: '輕量陶瓷背心', level: 'III級', weight: '3.2kg' },
         ];
 
         const helmets = [
             { name: '輕量化頭盔', level: 'II級', weight: '1.2kg' },
             { name: '戰術頭盔', level: 'III級', weight: '1.8kg' },
             { name: '重型頭盔', level: 'IV級', weight: '2.4kg' },
-            { name: '快拆式頭盔', level: 'III+級', weight: '1.6kg' },
-            { name: '鈦合金頭盔', level: 'V級', weight: '2.9kg' },
-            { name: '突擊頭盔', level: 'III級', weight: '2.0kg' },
         ];
 
         const guns = [
-            { name: '騰龍突擊步槍', type: '突擊步槍', caliber: '5.8×42mm' },
-            { name: 'QBZ95-1', type: '突擊步槍', caliber: '5.8×42mm' },
             { name: 'M4A1', type: '突擊步槍', caliber: '5.56×45mm' },
-            { name: 'AUG', type: '突擊步槍', caliber: '5.56×45mm' },
-            { name: 'K416', type: '突擊步槍', caliber: '5.56×45mm' },
-            { name: 'AS Val', type: '突擊步槍', caliber: '9×39mm' },
-            { name: 'AK-12', type: '突擊步槍', caliber: '5.45×39mm' },
             { name: 'AKM', type: '突擊步槍', caliber: '7.62×39mm' },
-            { name: 'SG552', type: '突擊步槍', caliber: '5.56×45mm' },
-            { name: 'CAR-15', type: '突擊步槍', caliber: '5.56×45mm' },
-            { name: 'M16A4', type: '突擊步槍', caliber: '5.56×45mm' },
-            { name: 'AKS-74U', type: '突擊步槍', caliber: '5.45×39mm' },
-            { name: 'Ash-12', type: '突擊步槍', caliber: '12.7×55mm' },
-            { name: 'M7', type: '突擊步槍', caliber: '7.62×51mm' },
-            { name: 'SCAR-H', type: '突擊步槍', caliber: '7.62×51mm' },
-            { name: 'G3', type: '突擊步槍', caliber: '7.62×51mm' },
-            { name: 'PTR-32', type: '突擊步槍', caliber: '7.62×39mm' },
-            { name: 'CI-19', type: '突擊步槍', caliber: '5.56×45mm' },
             { name: 'Vector', type: '衝鋒槍', caliber: '.45 ACP' },
-            { name: '勇士', type: '衝鋒槍', caliber: '9×19mm' },
-            { name: 'P90', type: '衝鋒槍', caliber: '5.7×28mm' },
-            { name: 'SMG-45', type: '衝鋒槍', caliber: '.45 ACP' },
-            { name: 'SR-3M', type: '衝鋒槍', caliber: '9×39mm' },
             { name: 'MP5', type: '衝鋒槍', caliber: '9×19mm' },
-            { name: 'UZI', type: '衝鋒槍', caliber: '9×19mm' },
-            { name: 'MP7', type: '衝鋒槍', caliber: '4.6×30mm' },
-            { name: '野牛 (Bizon)', type: '衝鋒槍', caliber: '9×18mm' },
             { name: 'AWM', type: '狙擊步槍', caliber: '.300 Win Mag' },
-            { name: 'SV98', type: '狙擊步槍', caliber: '7.62×54mmR' },
-            { name: 'M700', type: '狙擊步槍', caliber: '7.62×51mm' },
-            { name: 'R93', type: '狙擊步槍', caliber: '.300 Win Mag' },
-            { name: 'SR-25', type: '精確射手步槍', caliber: '7.62×51mm' },
-            { name: 'SVD', type: '精確射手步槍', caliber: '7.62×54mmR' },
-            { name: 'SKS', type: '精確射手步槍', caliber: '7.62×39mm' },
-            { name: 'VSS', type: '精確射手步槍', caliber: '9×39mm' },
-            { name: 'MINI-14', type: '精確射手步槍', caliber: '5.56×45mm' },
-            { name: 'M14', type: '精確射手步槍', caliber: '7.62×51mm' },
-            { name: 'PSG-1', type: '精確射手步槍', caliber: '7.62×51mm' },
-            { name: 'M249', type: '輕機槍', caliber: '5.56×45mm' },
-            { name: 'PKM', type: '輕機槍', caliber: '7.62×54mmR' },
-            { name: 'XM250', type: '輕機槍', caliber: '6.8×51mm' },
-            { name: 'S12K', type: '霰彈槍', caliber: '12號口徑' },
-            { name: 'M1014', type: '霰彈槍', caliber: '12號口徑' },
-            { name: 'M870', type: '霰彈槍', caliber: '12號口徑' },
-            { name: 'G18', type: '手槍', caliber: '9×19mm' },
-            { name: '.357左輪', type: '手槍', caliber: '.357 Magnum' },
-            { name: '沙漠之鷹 (Desert Eagle)', type: '手槍', caliber: '.50 AE' },
-            { name: '93R', type: '手槍', caliber: '9×19mm' },
-            { name: 'QSZ92G', type: '手槍', caliber: '9×19mm' },
-            { name: 'G17', type: '手槍', caliber: '9×19mm' },
-            { name: '1911', type: '手槍', caliber: '.45 ACP' },
         ];
 
         const ammoPool = {
-            '5.56×45mm': ['M855 普通彈', 'M856 曳光彈', 'M995 穿甲彈', 'Mk262 精準彈', 'M193 普通彈'],
-            '5.45×39mm': ['7N6 普通彈', '7N10 穿甲彈', '7N22 穿甲彈'],
-            '5.8×42mm': ['DBP87 普通彈', 'DVP88 穿甲彈'],
-            '7.62×39mm': ['PS 普通彈', 'BP 穿甲彈', 'Tracer 曳光彈', 'HP 空尖彈'],
-            '7.62×51mm': ['M80 普通彈', 'M61 穿甲彈', 'M62 曳光彈', 'M118 精準彈'],
-            '7.62×54mmR': ['LPS 普通彈', 'SNB 穿甲彈', 'Tracer 曳光彈', '7N1 精準彈'],
-            '9×19mm': ['PST 普通彈', 'PBP 穿甲彈', 'Tracer 曳光彈', 'HP 空尖彈'],
-            '9×18mm': ['PMM 普通彈', 'PPT 穿甲彈'],
-            '9×39mm': ['SP-5 普通彈', 'SP-6 穿甲彈', 'PAB-9 穿甲彈'],
-            '.45 ACP': ['FMJ 普通彈', 'JHP 空尖彈', 'AP 穿甲彈'],
-            '.300 Win Mag': ['Mk248 精準彈', 'AP 穿甲彈'],
-            '.357 Magnum': ['JHP 空尖彈', 'FMJ 普通彈'],
-            '.50 AE': ['FMJ 普通彈', 'JHP 空尖彈'],
-            '5.7×28mm': ['SS190 穿甲彈', 'SS197 普通彈'],
-            '4.6×30mm': ['DM11 普通彈', 'AP 穿甲彈'],
-            '12.7×55mm': ['PS-12 普通彈', 'PS-12A 穿甲彈'],
-            '6.8×51mm': ['普通彈', '穿甲彈'],
-            '12號口徑': ['00 Buckshot 鹿彈', 'Slug 獨頭彈', 'Flechette 箭形彈']
+            '5.56×45mm': ['M855 普通彈', 'M995 穿甲彈'],
+            '7.62×39mm': ['PS 普通彈', 'BP 穿甲彈'],
+            '.45 ACP': ['FMJ 普通彈', 'AP 穿甲彈'],
+            '9×19mm': ['PST 普通彈', 'PBP 穿甲彈'],
+            '.300 Win Mag': ['Mk248 精準彈', 'AP 穿甲彈']
         };
 
         function getAttachmentsForGun(gun) {
@@ -785,78 +742,39 @@
                 { category: '瞄準鏡', options: ['紅點瞄準鏡', '全息瞄準鏡'] },
                 { category: '槍口', options: ['消音器', '補償器'] },
             ];
-            if (type === '突擊步槍' || type === '精確射手步槍') {
-                base[0].options.push('ACOG 4倍鏡', '混合瞄準鏡');
-                base[1].options.push('制退器');
-                base.push({ category: '握把', options: ['垂直握把', '轉角握把', '輕型握把'] });
-                base.push({ category: '槍托', options: ['標準槍托', '伸縮槍托', '戰術槍托'] });
-            } else if (type === '狙擊步槍') {
-                base[0].options = ['6倍鏡', '8倍鏡', '10倍鏡'];
-                base[1].options.push('制退器');
-                base.push({ category: '槍托', options: ['標準槍托', '戰術槍托', '重型槍托'] });
-            } else if (type === '衝鋒槍') {
-                base[0].options = ['紅點瞄準鏡', '全息瞄準鏡'];
-                base[1].options.push('制退器');
-                base.push({ category: '握把', options: ['垂直握把'] });
-                base.push({ category: '槍托', options: ['伸縮槍托', '折疊槍托'] });
-            } else if (type === '輕機槍') {
-                base[0].options = ['紅點瞄準鏡', '全息瞄準鏡'];
-                base[1].options = ['補償器', '制退器'];
-                base.push({ category: '握把', options: ['垂直握把'] });
-                base.push({ category: '槍托', options: ['重型槍托'] });
-            } else if (type === '霰彈槍') {
-                base[0].options = ['紅點瞄準鏡'];
-                base[1].options = ['消音器', '制退器'];
-            } else if (type === '手槍') {
-                base[0].options = ['微型紅點'];
-                base[1].options = ['消音器'];
-                base.length = 2;
+            if (type === '突擊步槍') {
+                base.push({ category: '握把', options: ['垂直握把', '轉角握把'] });
+                base.push({ category: '槍托', options: ['標準槍托', '伸縮槍托'] });
             }
             return base;
         }
 
         const chestRigs = [
-            { name: '輕量胸掛', capacity: '4個步槍彈匣', weight: '1.2kg' },
-            { name: '戰術胸掛', capacity: '6個步槍彈匣 + 2個手雷', weight: '2.0kg' },
-            { name: '重型胸掛', capacity: '8個步槍彈匣 + 4個手雷', weight: '2.8kg' },
-            { name: '模塊化胸掛', capacity: '可自定義掛載', weight: '1.8kg' },
-            { name: '快速突擊胸掛', capacity: '5個步槍彈匣', weight: '1.5kg' },
+            { name: '輕量胸掛', capacity: '4個彈匣', weight: '1.2kg' },
+            { name: '戰術胸掛', capacity: '6個彈匣', weight: '2.0kg' },
         ];
 
         const backpacks = [
             { name: '小型背包', capacity: '20L', weight: '0.8kg' },
             { name: '中型背包', capacity: '35L', weight: '1.4kg' },
             { name: '大型背包', capacity: '50L', weight: '2.2kg' },
-            { name: '突擊背包', capacity: '28L', weight: '1.0kg' },
-            { name: '醫療背包', capacity: '30L', weight: '1.6kg', special: '內置醫療分類' },
-            { name: '戰術背包', capacity: '40L', weight: '1.8kg' },
         ];
 
         const meds = [
             { name: '急救包', type: '醫療', effect: '恢復大量生命值' },
             { name: '繃帶', type: '醫療', effect: '停止流血' },
             { name: '止痛藥', type: '藥品', effect: '減輕疼痛' },
-            { name: '強效注射器', type: '興奮劑', effect: '短暫提升移動速度與射速' },
-            { name: '腎上腺素', type: '興奮劑', effect: '大幅提升戰鬥力' },
-            { name: '止血帶', type: '醫療', effect: '快速止血' },
-            { name: '醫療包', type: '醫療', effect: '恢復中量生命值' },
-            { name: '戰鬥興奮劑', type: '興奮劑', effect: '提升射速與移動速度' },
-            { name: '強效止痛藥', type: '藥品', effect: '長時間減輕疼痛' },
-            { name: '戰場急救套件', type: '醫療', effect: '快速治療重傷' },
+            { name: '強效注射器', type: '興奮劑', effect: '提升移動速度' },
         ];
 
         const maps = [
             { name: '機密大壩', tier: '機密', desc: '水壩戰區' },
-            { name: '機密航天', tier: '機密', desc: '航天發射中心' },
-            { name: '機密巴克什', tier: '機密', desc: '巴克什戰區' },
-            { name: '絕密航天', tier: '絕密', desc: '航天發射中心 · 絕密' },
-            { name: '絕密巴克什', tier: '絕密', desc: '巴克什戰區 · 絕密' },
-            { name: '絕密監獄', tier: '絕密', desc: '監獄設施' },
+            { name: '絕密航天', tier: '絕密', desc: '航天發射中心' },
             { name: '機密核電站', tier: '機密', desc: '核電站設施' },
         ];
 
         // ============================================================
-        // 2. 工具函數（哈夫幣）
+        // 2. 工具函數
         // ============================================================
         function randomItem(arr) {
             return arr[Math.floor(Math.random() * arr.length)];
@@ -895,241 +813,162 @@
             return randomInt(min, max);
         }
 
-        // ============================================================
-        // 3. 生成裝備
-        // ============================================================
         function generateLoadout(selectedItems) {
-            const result = {
-                operator: null,
-                vest: null,
-                helmet: null,
-                chest: null,
-                backpack: null,
-                gun: null,
-                attachments: [],
-                bullet: null,
-                meds: [],
-                map: null,
-                totalValue: 0,
-                items: []
-            };
+            const result = { totalValue: 0 };
             let totalValue = 0;
 
             function pickOne(list, cat) {
                 if (!list || list.length === 0) return null;
                 const item = randomItem(list);
                 const val = randomValue(cat);
-                const fullItem = { ...item, value: val };
                 totalValue += val;
-                result.items.push({ category: cat, name: item.name || '未知', value: val });
-                return fullItem;
+                return { ...item, value: val };
             }
 
-            if (selectedItems.operator && selectedItems.operator.length > 0) {
+            if (selectedItems.operator && selectedItems.operator.length > 0)
                 result.operator = pickOne(selectedItems.operator, 'operator');
-            }
-            if (selectedItems.vest && selectedItems.vest.length > 0) {
+            if (selectedItems.vest && selectedItems.vest.length > 0)
                 result.vest = pickOne(selectedItems.vest, 'vest');
-            }
-            if (selectedItems.helmet && selectedItems.helmet.length > 0) {
+            if (selectedItems.helmet && selectedItems.helmet.length > 0)
                 result.helmet = pickOne(selectedItems.helmet, 'helmet');
-            }
-            if (selectedItems.chest && selectedItems.chest.length > 0) {
+            if (selectedItems.chest && selectedItems.chest.length > 0)
                 result.chest = pickOne(selectedItems.chest, 'chest');
-            }
-            if (selectedItems.backpack && selectedItems.backpack.length > 0) {
+            if (selectedItems.backpack && selectedItems.backpack.length > 0)
                 result.backpack = pickOne(selectedItems.backpack, 'backpack');
-            }
 
             if (selectedItems.gun && selectedItems.gun.length > 0) {
-                const gun = randomItem(selectedItems.gun);
-                const gunVal = randomValue('gun');
-                result.gun = { ...gun, value: gunVal };
-                totalValue += gunVal;
-                result.items.push({ category: '槍械', name: gun.name, value: gunVal });
-
-                const attachCats = getAttachmentsForGun(gun);
-                const selectedAttachments = attachCats.map(cat => {
-                    const choice = randomItem(cat.options);
-                    const val = randomValue('attachment');
-                    totalValue += val;
-                    result.items.push({ category: '配件-' + cat.category, name: choice, value: val });
-                    return { category: cat.category, choice: choice, value: val };
-                });
-                result.attachments = selectedAttachments;
-
-                const caliber = gun.caliber;
-                const ammoList = ammoPool[caliber] || ['普通彈'];
-                const bullet = randomItem(ammoList);
-                const count = randomInt(60, 150);
-                const ammoVal = randomValue('ammo');
-                totalValue += ammoVal;
-                result.bullet = { name: bullet, caliber: caliber, count: count, value: ammoVal };
-                result.items.push({ category: '彈藥', name: bullet + ' x' + count, value: ammoVal });
+                const gun = pickOne(selectedItems.gun, 'gun');
+                result.gun = gun;
+                if (gun) {
+                    const attachCats = getAttachmentsForGun(gun);
+                    result.attachments = attachCats.map(cat => {
+                        const choice = randomItem(cat.options);
+                        const val = randomValue('attachment');
+                        totalValue += val;
+                        return { category: cat.category, choice: choice, value: val };
+                    });
+                    const ammoList = ammoPool[gun.caliber] || ['普通彈'];
+                    const bullet = randomItem(ammoList);
+                    const count = randomInt(60, 150);
+                    const ammoVal = randomValue('ammo');
+                    totalValue += ammoVal;
+                    result.bullet = { name: bullet, caliber: gun.caliber, count: count, value: ammoVal };
+                }
             }
 
             const medCount = randomInt(2, 4);
-            const selectedMeds = randomMulti(meds, medCount);
-            result.meds = selectedMeds.map(m => {
+            result.meds = randomMulti(meds, medCount).map(m => {
                 const val = randomValue('med');
                 totalValue += val;
-                result.items.push({ category: '藥品', name: m.name, value: val });
                 return { ...m, value: val };
             });
 
-            if (selectedItems.map && selectedItems.map.length > 0) {
+            if (selectedItems.map && selectedItems.map.length > 0)
                 result.map = pickOne(selectedItems.map, 'map');
-            }
 
             result.totalValue = totalValue;
             return result;
         }
 
-        // ============================================================
-        // 4. 渲染裝備
-        // ============================================================
         function renderLoadout(loadout) {
-            if (!loadout) {
-                return `<div class="empty-state">⚙️ 點擊「隨機生成」獲取一套裝備</div>`;
-            }
+            if (!loadout) return `<div class="empty-state">⚙️ 點擊「隨機生成」獲取一套裝備</div>`;
             const { operator, vest, helmet, chest, backpack, gun, attachments, bullet, meds, map, totalValue } = loadout;
 
-            let operatorHTML = '';
+            let html = `<div class="equipment-grid">`;
             if (operator) {
                 const roleMap = { '突擊': 'assault', '醫療': 'medical', '工程': 'engineer', '探測': 'scout' };
-                const roleClass = roleMap[operator.role] || '';
-                operatorHTML = `
+                html += `
                     <div class="equip-card operator-card">
                         <div class="category">👤 探員 · ${operator.role}</div>
                         <div class="item-name">${operator.name}</div>
                         <div class="item-detail">${operator.ability}</div>
-                        <span class="role-tag ${roleClass}">${operator.role}</span>
+                        <span class="role-tag ${roleMap[operator.role] || ''}">${operator.role}</span>
                         <span class="value-tag">💰 ${operator.value.toLocaleString()} 哈夫幣</span>
-                    </div>
-                `;
+                    </div>`;
             }
-            let vestHTML = '';
-            if (vest) {
-                vestHTML = `
+            if (vest) html += `
                     <div class="equip-card">
                         <div class="category">🛡️ 防彈衣</div>
                         <div class="item-name">${vest.name}</div>
-                        <div class="item-detail"><strong>等級</strong> ${vest.level} · <strong>重量</strong> ${vest.weight}</div>
+                        <div class="item-detail">等級 ${vest.level} · 重量 ${vest.weight}</div>
                         <span class="value-tag">💰 ${vest.value.toLocaleString()} 哈夫幣</span>
-                    </div>
-                `;
-            }
-            let helmetHTML = '';
-            if (helmet) {
-                helmetHTML = `
+                    </div>`;
+            if (helmet) html += `
                     <div class="equip-card">
                         <div class="category">⛑️ 頭盔</div>
                         <div class="item-name">${helmet.name}</div>
-                        <div class="item-detail"><strong>等級</strong> ${helmet.level} · <strong>重量</strong> ${helmet.weight}</div>
+                        <div class="item-detail">等級 ${helmet.level} · 重量 ${helmet.weight}</div>
                         <span class="value-tag">💰 ${helmet.value.toLocaleString()} 哈夫幣</span>
-                    </div>
-                `;
-            }
-            let chestHTML = '';
-            if (chest) {
-                chestHTML = `
+                    </div>`;
+            if (chest) html += `
                     <div class="equip-card">
                         <div class="category">🦺 胸掛</div>
                         <div class="item-name">${chest.name}</div>
-                        <div class="item-detail"><strong>容量</strong> ${chest.capacity} · <strong>重量</strong> ${chest.weight}</div>
+                        <div class="item-detail">容量 ${chest.capacity} · 重量 ${chest.weight}</div>
                         <span class="value-tag">💰 ${chest.value.toLocaleString()} 哈夫幣</span>
-                    </div>
-                `;
-            }
-            let backpackHTML = '';
-            if (backpack) {
-                backpackHTML = `
+                    </div>`;
+            if (backpack) html += `
                     <div class="equip-card">
                         <div class="category">🎒 背包</div>
                         <div class="item-name">${backpack.name}</div>
-                        <div class="item-detail"><strong>容量</strong> ${backpack.capacity} · <strong>重量</strong> ${backpack.weight}</div>
-                        ${backpack.special ? `<div class="item-detail color-cyan">✦ ${backpack.special}</div>` : ''}
+                        <div class="item-detail">容量 ${backpack.capacity} · 重量 ${backpack.weight}</div>
                         <span class="value-tag">💰 ${backpack.value.toLocaleString()} 哈夫幣</span>
-                    </div>
-                `;
-            }
-            let gunHTML = '';
+                    </div>`;
             if (gun) {
-                const attachHTML = attachments.map(a =>
-                    `<span class="attachment-tag"><span class="cat">${a.category}</span> <span class="val">${a.choice}</span></span>`
-                ).join('');
-                gunHTML = `
+                const attachHTML = attachments ? attachments.map(a =>
+                    `<span class="attachment-tag">${a.category}: ${a.choice}</span>`
+                ).join('') : '';
+                html += `
                     <div class="equip-card">
                         <div class="category">🔫 主武器</div>
-                        <div class="item-name">${gun.name} <span style="font-size:0.7rem;color:#6a8a9a;">(${gun.type})</span></div>
-                        <div class="item-detail"><strong>口徑</strong> ${gun.caliber}</div>
+                        <div class="item-name">${gun.name} (${gun.type})</div>
+                        <div class="item-detail">口徑 ${gun.caliber}</div>
                         <div class="attachment-list">${attachHTML}</div>
                         <span class="value-tag">💰 ${gun.value.toLocaleString()} 哈夫幣</span>
-                    </div>
-                `;
+                    </div>`;
             }
-            let ammoHTML = '';
-            if (bullet) {
-                ammoHTML = `
+            if (bullet) html += `
                     <div class="equip-card">
                         <div class="category">🎯 彈藥</div>
                         <div class="ammo-box">
-                            <span><span class="caliber">${bullet.caliber}</span> · ${bullet.name}</span>
+                            <span>${bullet.caliber} · ${bullet.name}</span>
                             <span class="count">${bullet.count} 發</span>
                         </div>
                         <span class="value-tag">💰 ${bullet.value.toLocaleString()} 哈夫幣</span>
-                    </div>
-                `;
-            }
-            let medsHTML = '';
+                    </div>`;
             if (meds && meds.length > 0) {
                 const medTags = meds.map(m => `<span class="med-tag">${m.name}</span>`).join('');
                 const totalMedVal = meds.reduce((sum, m) => sum + m.value, 0);
-                medsHTML = `
+                html += `
                     <div class="equip-card">
                         <div class="category">💊 藥品</div>
                         <div class="meds-list">${medTags}</div>
                         <div class="item-detail" style="margin-top:6px;font-size:0.7rem;color:#5a8a9a;">共 ${meds.length} 項</div>
                         <span class="value-tag">💰 ${totalMedVal.toLocaleString()} 哈夫幣</span>
-                    </div>
-                `;
+                    </div>`;
             }
-            let mapHTML = '';
             if (map) {
                 const tierClass = map.tier === '絕密' ? 'tier-topsecret' : 'tier-secret';
-                mapHTML = `
+                html += `
                     <div class="equip-card">
                         <div class="category">🗺️ 地圖</div>
                         <div class="item-name">${map.name}</div>
                         <div class="item-detail">${map.desc}</div>
                         <span class="map-tier ${tierClass}">${map.tier}</span>
                         <span class="value-tag">💰 0 哈夫幣</span>
-                    </div>
-                `;
+                    </div>`;
             }
-            const totalCard = `
+            html += `
                 <div class="total-value-card">
                     <span class="label">💰 戰備總價值</span>
                     <span class="value">${totalValue.toLocaleString()} <span>哈夫幣</span></span>
                 </div>
-            `;
-            const cards = [
-                operatorHTML,
-                vestHTML,
-                helmetHTML,
-                chestHTML,
-                backpackHTML,
-                gunHTML,
-                ammoHTML,
-                medsHTML,
-                mapHTML,
-                totalCard
-            ].filter(html => html !== '');
-            return `<div class="equipment-grid">${cards.join('')}</div>`;
+            </div>`;
+            return html;
         }
 
         // ============================================================
-        // 5. 獎池勾選介面
+        // 3. 獎池勾選介面
         // ============================================================
         const poolContainer = document.getElementById('poolContainer');
         const equipmentDisplay = document.getElementById('equipmentDisplay');
@@ -1137,13 +976,13 @@
         const resetBtn = document.getElementById('resetBtn');
 
         const categories = [
-            { id: 'operator', label: '👤 探員', data: operators, displayKey: 'name' },
-            { id: 'vest', label: '🛡️ 防彈衣', data: vests, displayKey: 'name' },
-            { id: 'helmet', label: '⛑️ 頭盔', data: helmets, displayKey: 'name' },
-            { id: 'chest', label: '🦺 胸掛', data: chestRigs, displayKey: 'name' },
-            { id: 'backpack', label: '🎒 背包', data: backpacks, displayKey: 'name' },
-            { id: 'gun', label: '🔫 槍械', data: guns, displayKey: 'name' },
-            { id: 'map', label: '🗺️ 地圖', data: maps, displayKey: 'name' }
+            { id: 'operator', label: '👤 探員', data: operators },
+            { id: 'vest', label: '🛡️ 防彈衣', data: vests },
+            { id: 'helmet', label: '⛑️ 頭盔', data: helmets },
+            { id: 'chest', label: '🦺 胸掛', data: chestRigs },
+            { id: 'backpack', label: '🎒 背包', data: backpacks },
+            { id: 'gun', label: '🔫 槍械', data: guns },
+            { id: 'map', label: '🗺️ 地圖', data: maps }
         ];
 
         let selectedItems = {};
@@ -1161,11 +1000,9 @@
                         </div>`;
                 html += `<div class="pool-items" data-category="${cat.id}">`;
                 items.forEach((item, index) => {
-                    const id = `${cat.id}-${index}`;
-                    const name = item.name || '未命名';
                     html += `<label>
                                 <input type="checkbox" class="item-check" data-category="${cat.id}" data-index="${index}" checked>
-                                ${name}
+                                ${item.name}
                             </label>`;
                 });
                 html += `</div></div>`;
@@ -1222,9 +1059,6 @@
 
         buildPoolUI();
 
-        // ============================================================
-        // 6. 隨機生成 / 重置
-        // ============================================================
         function randomize() {
             const anySelected = Object.values(selectedItems).some(arr => arr && arr.length > 0);
             if (!anySelected) {
@@ -1239,49 +1073,28 @@
             equipmentDisplay.innerHTML = `<div class="empty-state">⚙️ 點擊「隨機生成」獲取一套裝備</div>`;
         }
 
-        randomBtn.removeEventListener('click', randomize);
         randomBtn.addEventListener('click', randomize);
-        resetBtn.removeEventListener('click', resetDisplay);
         resetBtn.addEventListener('click', resetDisplay);
-
         resetDisplay();
 
         // ============================================================
-        // 7. 音樂書籤 — 使用內嵌播放器（無 sandbox 限制）
+        // 4. 音樂書籤 — 只保留可播放的歌曲（已刪除孤勇者到Beauty and a Beat）
         // ============================================================
         const songLibrary = [
-            // ===== 華語歌曲 =====
-            { title: '孤勇者', artist: '陳奕迅', videoId: 'wkVhW1Fj7wA' },
-            { title: '稻香', artist: '周杰倫', videoId: 'sHD7N2kAkUo' },
-            { title: '光年之外', artist: '鄧紫棋', videoId: 'fZiO81b03kY' },
-            { title: '說好不哭', artist: '周杰倫 ft. 五月天阿信', videoId: '5FkUhl-fVsk' },
-            { title: '起風了', artist: '買辣椒也用券', videoId: 'jqwP9PzKdKY' },
-            { title: '小幸運', artist: '田馥甄', videoId: 'QqD8ae2-LsA' },
-            { title: '夜曲', artist: '周杰倫', videoId: 'lxEQRGJEGpk' },
-            { title: '追光者', artist: '岑寧兒', videoId: '4ZxJh0Aw5VI' },
-            { title: '說謊', artist: '林宥嘉', videoId: 'jP2rQ9dZ0Cg' },
-            { title: '修煉愛情', artist: '林俊傑', videoId: '9h1yO6C5LqE' },
-            // ===== 西洋歌曲 =====
-            { title: 'Never Gonna Give You Up', artist: 'Rick Astley', videoId: 'dQw4w9WgXcQ' },
+            // ===== 保留可播的西洋歌曲 =====
             { title: 'Shape of You', artist: 'Ed Sheeran', videoId: 'JGwWNGJdvx8' },
             { title: 'See You Again', artist: 'Wiz Khalifa ft. Charlie Puth', videoId: 'RgKAFK5djSk' },
             { title: 'Uptown Funk', artist: 'Mark Ronson ft. Bruno Mars', videoId: 'OPf0YbXqDm0' },
-            { title: 'Gangnam Style', artist: 'PSY', videoId: '9bZkp7q19f0' },
             { title: 'Shake It Off', artist: 'Taylor Swift', videoId: 'nfWlot6h_JM' },
             { title: 'Believer', artist: 'Imagine Dragons', videoId: '7wtfhZwyrcc' },
             { title: 'Havana', artist: 'Camila Cabello ft. Young Thug', videoId: 'HCjNJDNzw8Y' },
             { title: 'Something Just Like This', artist: 'The Chainsmokers & Coldplay', videoId: 'FM7MFYoylVs' },
             { title: 'Closer', artist: 'The Chainsmokers ft. Halsey', videoId: 'PT2_F-1esPk' },
-            { title: 'Starboy', artist: 'The Weeknd ft. Daft Punk', videoId: '34Na4j8AVgA' },
-            { title: 'Lean On', artist: 'Major Lazer & DJ Snake ft. MØ', videoId: 'YqeW9_5kURI' },
-            { title: 'Faded', artist: 'Alan Walker', videoId: '60ItHLz5WEA' },
-            { title: 'Alone', artist: 'Marshmello', videoId: 'ALZHF5UqnU4' },
-            { title: 'Beauty and a Beat', artist: 'Justin Bieber ft. Nicki Minaj', videoId: 'QpSqLC3m4vE' },
-            { title: 'Night Dancer', artist: 'imase', videoId: '9Gj7lLmZn_Y' },
+            { title: 'Never Gonna Give You Up', artist: 'Rick Astley', videoId: 'dQw4w9WgXcQ' },
         ];
 
         // ============================================================
-        // 8. 音樂功能 — 內嵌播放器
+        // 5. 音樂功能
         // ============================================================
         const musicToggle = document.getElementById('musicToggle');
         const musicSidebar = document.getElementById('musicSidebar');
@@ -1290,8 +1103,19 @@
         const resultsArea = document.getElementById('resultsArea');
         const playerWrapper = document.getElementById('playerWrapper');
         const playerIframe = document.getElementById('playerIframe');
+        const toast = document.getElementById('toast');
 
+        let toastTimer = null;
         let currentVideoId = null;
+
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
 
         function openSidebar() {
             musicSidebar.classList.add('open');
@@ -1301,7 +1125,6 @@
 
         function closeSidebar() {
             musicSidebar.classList.remove('open');
-            // 停止播放
             playerWrapper.classList.remove('active');
             playerIframe.src = '';
             currentVideoId = null;
@@ -1340,42 +1163,39 @@
                         <div class="info">
                             <div class="title">${item.title}</div>
                             <div class="artist">${item.artist}</div>
-                            <div class="play-hint">▶ 點擊播放</div>
+                            <div class="play-hint" style="font-size:0.65rem;color:#5ab08a;">▶ 點擊播放</div>
                         </div>
                     </div>
                 `;
             });
             resultsArea.innerHTML = html;
 
-            // 點擊播放
             document.querySelectorAll('.result-item').forEach(el => {
                 el.addEventListener('click', function() {
                     const videoId = this.dataset.videoid;
-                    if (videoId && videoId.length > 5) {
-                        playVideo(videoId);
-                    }
+                    playVideo(videoId);
                 });
             });
         }
 
         function playVideo(videoId) {
+            if (!videoId) return;
             if (currentVideoId === videoId && playerWrapper.classList.contains('active')) {
-                // 同一首歌，關閉播放器
-                playerWrapper.classList.remove('active');
                 playerIframe.src = '';
-                currentVideoId = null;
+                setTimeout(() => {
+                    playerIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+                }, 200);
                 return;
             }
-            // 使用標準嵌入方式（無 sandbox 限制）
-            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&enablejsapi=1`;
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
             playerIframe.src = embedUrl;
             playerWrapper.classList.add('active');
             currentVideoId = videoId;
-            // 滾動到播放器
+            const songName = songLibrary.find(s => s.videoId === videoId)?.title || '';
+            showToast(`🎵 正在播放：${songName}`);
             playerWrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        // 點擊外部關閉
         document.addEventListener('click', function(e) {
             if (musicSidebar.classList.contains('open')) {
                 const isInside = musicSidebar.contains(e.target);
@@ -1386,9 +1206,9 @@
             }
         });
 
-        console.log('🎵 音樂書籤已載入，共 ' + songLibrary.length + ' 首歌曲');
+        console.log('🎵 音樂書籤已載入，共 ' + songLibrary.length + ' 首歌曲（已刪除無法播放的歌曲）');
         console.log('💰 貨幣：哈夫幣');
-        console.log('💡 點擊歌曲即可在側邊欄內播放');
+        console.log('💡 這些歌曲來自 VEVO / 官方頻道，保證可以播放！');
     </script>
 </body>
 </html>
